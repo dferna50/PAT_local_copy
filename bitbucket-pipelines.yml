@@ -7,10 +7,16 @@ image: mcr.microsoft.com/playwright:v1.49.0-noble  # Use a Node.js Docker image
 
 pipelines:
   default:
+    - step:
+        name: Install Dependencies
+        caches:
+          - node
+        script:
+          - npm ci  # Clean install dependencies
+          - npx playwright install-deps  # Install Playwright system dependencies
+          - npx playwright install  # Install browsers
 
-
-    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
     - step:
         name: Run Playwright Tests
         script:
-          - npx playwright test
+          - npx playwright test  # Run Playwright tests
