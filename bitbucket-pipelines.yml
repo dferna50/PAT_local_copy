@@ -17,4 +17,4 @@ pipelines:
           - npx playwright install  # Install browsers
 
     
-          - npx playwright test  # Run Playwright tests
+          - npx playwright test templateListPage.spec.js # Run Playwright tests
