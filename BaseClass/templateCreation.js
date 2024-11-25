@@ -29,7 +29,7 @@ class templateCreation{
         }
         async clickCreateTemplateButton(){
         await  this.page.getByRole('button', { name: '+ New template' }).click();
-       expect(await this.page.locator('#root')).toContainText('Untitled template');
+      await expect( this.page.locator('#root')).toContainText('Untitled template');
         }
         async templatenameCreatorAndFinder(){
         let name = faker.lorem.word();
@@ -52,7 +52,7 @@ class templateCreation{
             let sectionName = faker.location.street();
             await this.sectionHeadingInput.fill("New Section - " + sectionName);
             await this.finalCreateSectionButton.click();
-            await expect(this.page.locator(".lh-1")).toContainText("New Section - " + sectionName)  // first section in the template
+            await expect(this.page.locator('.px-0 > div:nth-child(2)').first()).toContainText("New Section - " + sectionName)  // first section in the template
                 }
                 async existingSection(){ 
                     await this.addSectionButton.click(); 
@@ -66,7 +66,7 @@ class templateCreation{
                     await this.sectionNotesTextBox.fill(notes);
                     await this.saveSectionNotes.click();
                     await this.updateInLibraryButton.click();
-                    expect (await this.page.locator("#root")).toContainText(notes);        
+                    await expect ( this.page.locator("#root")).toContainText(notes);        
                 }
                 async addCourseTypeRequirment(){ 
                     let courseSubject = ["ENG", "JPN","HST"] 
@@ -83,7 +83,7 @@ class templateCreation{
                     await this.saveSectionNotes.click() // Save requirments /// reusing the same locator
                     await this.updateInLibraryButton.click();   
                     await this.page.waitForTimeout(2000);
-                    expect (await this.page.locator(".border-top-0").first()).toContainText(randomSubject+" "+randomNumber);
+                    await expect ( this.page.locator(".border-top-0").first()).toContainText(randomSubject+" "+randomNumber);
                                      
                 }
                 async addGeneralStudiesRequirment() { 
@@ -103,13 +103,21 @@ class templateCreation{
                 await this.page.keyboard.press("Enter")
                 await this.saveSectionNotes.click() // Save requirments /// reusing the same locator
                 await this.updateInLibraryButton.click();  
-              // expect( await this.page.getByText('No requirements added')).toBeHidden();
-                //await this.page.waitForTimeout(2000);
-
-
-                
-
                 }
+                async customTextReq(){ 
+                    await this.editSectionButton.click();
+                    await this.addRequirmentButton.click();
+                    await this.page.selectOption('#componentSelect', { value: 'req_text' });
+                    await this.page.selectOption("#componentsContainer > div > div > div:nth-child(3) > div.d-flex.gap-2 > div.mb-2 > select", {value: "custom_text"})
+                    let customText = faker.lorem.paragraph();
+                    await this.page.locator('textarea[name="customText"]').fill(customText);
+                    await this.saveSectionNotes.click() // Save requirments /// reusing the same locator
+                    await this.updateInLibraryButton.click(); 
+                   // await this.page.waitForTimeout(2000);
+                    await expect( this.page.locator('.focus-off > div > .row')).toContainText(customText);
+
+
+                                }
                 
 }
 

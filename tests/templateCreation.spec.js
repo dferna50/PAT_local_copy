@@ -64,14 +64,21 @@ test.describe('Test the Creation of templates', () => {
      test("Add a general studies requitment type" ,async () => {
     await template.createNewSection();
     await template.addGeneralStudiesRequirment();
-    await template.page.waitForTimeout(2000);
 
 
      });
-    //  test("add a text type requirment (custome text)" ,async () => {
-    //     await template.createNewSection();
-        
-    //      });
+     test("add a text type requirment (custome text)" ,async () => {
+        await template.navigateToTemplatePage();
+        await template.clickCreateTemplateButton();
+        await template.createNewSection();
+        await template.customTextReq();  
+         });
+     test.only("create a text group" ,async () => {
+            // await template.navigateToTemplatePage();
+            // await template.clickCreateTemplateButton();
+             
+             });
+
     // 
     // 
     //create a text group
