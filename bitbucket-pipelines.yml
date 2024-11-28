@@ -1,0 +1,20 @@
+# This is an example Starter pipeline configuration
+# Use a skeleton to build, test and deploy using manual and parallel steps
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+
+image: mcr.microsoft.com/playwright:v1.49.0-noble  # Use a Node.js Docker image
+
+pipelines:
+  default:
+    - step:
+        name: Install Dependencies
+        caches:
+          - node
+        script:
+          - npm ci  # Clean install dependencies
+          - npx playwright install-deps  # Install Playwright system dependencies
+          - npx playwright install  # Install browsers
+
+    
+          - npx playwright test templateListPage.spec.js # Run Playwright tests
