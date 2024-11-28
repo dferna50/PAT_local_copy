@@ -1,6 +1,8 @@
 const { test, expect } = require('@playwright/test');
 const { faker } = require('@faker-js/faker');
 const { ProgramSummaryPage } = require('../BaseClass/ProgramSummary.js');
+let  fakerGroupName = faker.lorem.words(4);
+
 //let programSummaryPage;
 class templateCreation{
 
@@ -19,6 +21,14 @@ class templateCreation{
         this.saveSectionNotes = this.page.getByRole('dialog').getByRole('button', { name: 'Save' });
         this.updateInLibraryButton = this.page.getByRole('button', { name: 'Update in library' });
         this.addRequirmentButton = this.page.getByRole('button', { name: '+ Add requirement' });
+        this.textOptionsButton = this.page.getByRole('button', { name: 'Text Options' });
+        this.newGroupButton = this.page.getByRole('button', { name: 'New group' });
+        this.groupNameButton = this.page.getByRole('button', { name: 'Group name' })
+        this.groupNameTextbox = this.page.getByRole('textbox').nth(1)
+        this.createNewOption = this.page.getByRole('button', { name: 'Create new option' })
+        this.addTextOption = this.page.getByRole('button', { name: 'Add text option' });
+        this.deleteGroup = this.page.getByRole('button', { name: 'Delete group' });
+        this.deleteConformation = this.page.getByRole('button', { name: 'Yes, delete this group' });
     }
 
     async navigateToTemplatePage() { 
@@ -115,9 +125,43 @@ class templateCreation{
                     await this.updateInLibraryButton.click(); 
                    // await this.page.waitForTimeout(2000);
                     await expect( this.page.locator('.focus-off > div > .row')).toContainText(customText);
+ }
+                async createTextOption(number){ 
+                   await this.textOptionsButton.click();
+                   await this.newGroupButton.click();
+                   await this.groupNameButton.click();
+                   await this.groupNameTextbox.fill(fakerGroupName);
+                    await this.createNewOption.nth(number).click();                
+                    await this.page.locator('textarea').nth(number).fill(faker.lorem.paragraphs(2))
+                    await this.addTextOption.click();
+                    await expect(this.page.locator('.pt-2 > div')).toContainText(fakerGroupName);
+                   // await this.page.waitForTimeout(2000);
+                }
+                async deleteTextOption() { 
+                   await this.deleteGroup.click();
+                   await this.deleteConformation.click();
+                   await expect(this.page.locator('.pt-2 > div')).not.toContainText(fakerGroupName);
+                   await this.page.waitForTimeout(2000);             
+                }
+                async addPresetTextOption(){ 
+                    await this.editSectionButton.click();
+                    await this.addRequirmentButton.click();
+                    await this.page.selectOption('#componentSelect', { value: 'req_text' });
+                    await this.page.selectOption("#componentsContainer > div > div > div:nth-child(3) > div.d-flex.gap-2 > div.mb-2 > select", {value: "0"})
+                    //await this.page.keyboard.press("Tab");
+                    await this.page.locator('#componentsContainer').getByRole('combobox').nth(3).selectOption({index: 1})
+                    await this.saveSectionNotes.click() // Save requirments /// reusing the same locator
+                    await this.updateInLibraryButton.click(); 
+                   // await this.page.waitForTimeout(2000);
+                    await expect( this.page.locator('.focus-off > div > .row')).toContainText(fakerGroupName);
+
+                   // await this.page.locator().focus().click();
+
+                    
 
 
-                                }
+                }
+
                 
 }
 

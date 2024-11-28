@@ -19,69 +19,77 @@ test.describe('Test the Creation of templates', () => {
     test.afterAll(async () => {
         await context.close();
     });
-    test("Navigate to template creation page", async () => {
+    test("01 Navigate to template creation page", async () => {
         await template.navigateToTemplatePage();
       await template.clickCreateTemplateButton();
     });
-    test("Create a blank template", async () => {
-        //await template.clickCreateTemplateButton();
+    test("02 Create a blank template", async () => {
         await template.createBlankTemplate(); 
        // await template.templatenameCreatorAndFinder();
     });
-    test("crearte a new section with no requirment", async () => {
-        //for (let i = 0; i < 10; i++){
-       // await template.clickCreateTemplateButton();
+    test("03 crearte a new section with no requirment", async () => {
         await template.createBlankTemplate();
         await template.createNewSection();
        // await template.templatenameCreatorAndFinder();
     
     });
 
-    test("add an exisiting section to the template", async () => { 
-        //await template.clickCreateTemplateButton();
-       // await template.createBlankTemplate();
+    test("04 add an exisiting section to the template", async () => { 
         await template.existingSection();
        // await template.templatenameCreatorAndFinder();
     })
-    test("Edit the section and add section notes", async () => { 
+    test("05 Edit the section and add section notes", async () => { 
        // await template.clickCreateTemplateButton();
         await template.createBlankTemplate();
         await template.createNewSection();
         await template.editSectionandAddSectionNotes();
-       // await template.page.waitForTimeout(5000);
        // await template.templatenameCreatorAndFinder();
     })
-    test("Add a couse type requirment", async () => { 
-       // await template.clickCreateTemplateButton();
-       //await template.createBlankTemplate();
-        //await template.createNewSection();
+    test("06 Add a couse type requirment", async () => { 
         await template.addCourseTypeRequirment();
-       // await template.page.waitForTimeout(5000);
-
         // await template.templatenameCreatorAndFinder();
 
     });
-     test("Add a general studies requitment type" ,async () => {
+     test("07 Add a general studies requitment type" ,async () => {
     await template.createNewSection();
     await template.addGeneralStudiesRequirment();
-
-
+    // await template.templatenameCreatorAndFinder();
      });
-     test("add a text type requirment (custome text)" ,async () => {
+     test("08 add a text type requirment (custome text)" ,async () => {
         await template.navigateToTemplatePage();
         await template.clickCreateTemplateButton();
         await template.createNewSection();
         await template.customTextReq();  
+         // await template.templatenameCreatorAndFinder();
          });
-     test.only("create a text group" ,async () => {
-            // await template.navigateToTemplatePage();
-            // await template.clickCreateTemplateButton();
-             
+     test("09 create a text group" ,async () => {
+            await template.createTextOption(0);
+            // await template.templatenameCreatorAndFinder();
              });
+    test("10 delete a text group" ,async () => {
+            await template.createTextOption(0);
+            await template.deleteTextOption();
+            // await template.templatenameCreatorAndFinder();
+                 });
 
-    // 
-    // 
-    //create a text group
+            test("11 Create multiple text groups" ,async () => {
+                for(let i =0; i<3; i++){
+                await template.createTextOption(i);
+                }
+               // await template.templatenameCreatorAndFinder();
+            });
+            test.only("12 Add text type requirment (prset)" ,async () => {
+               await template.createTextOption(0);
+               await template.page.getByRole('button', { name: 'Sections', exact: true }).click(); //navigate to sections tab 
+               //await template.page.locator(".inactive-tab").nth(1).
+               await template.createNewSection();
+               await template.addPresetTextOption()
+               await template.page.waitForTimeout(2000)
+            });
+                           
+
+
+
     // add text type requirment (prset) 
     //add a elective type requirment 
     // add a check type requirment

@@ -11,9 +11,9 @@ const fs = require('fs');
   await page.waitForURL('https://weblogin.asu.edu/cas/login?service*');
   // Fill in username and password (manual Duo interaction required for 2FA)
   await page.locator('#username').click();
-  await page.locator('#username').fill('pmanogar');
+  await page.locator('#username').fill('dferna50');
   await page.locator('#username').press('Tab');
-  await page.locator('#password').fill('Pavithraone@246');
+  await page.locator('#password').fill('M$y3Aws4@202');
   await page.getByRole('button', { name: 'Sign In' }).click();
   await page.waitForURL('https://api-ab654001.duosecurity.com/**');
   await page.getByRole('button', { name: 'Yes, this is my device' }).click();
