@@ -78,22 +78,36 @@ test.describe('Test the Creation of templates', () => {
                 }
                // await template.templatenameCreatorAndFinder();
             });
-            test.only("12 Add text type requirment (prset)" ,async () => {
+            test("12 Add text type requirment (prset)" ,async () => {
                await template.createTextOption(0);
                await template.page.getByRole('button', { name: 'Sections', exact: true }).click(); //navigate to sections tab 
                //await template.page.locator(".inactive-tab").nth(1).
                await template.createNewSection();
                await template.addPresetTextOption()
-               await template.page.waitForTimeout(2000)
             });
-                           
+            test("13 Add a elective type requirment " ,async () => {
+                await template.createNewSection();
+                await template.electiveReq();
+
+                });
+             test("14 Add a Check type requirment " ,async () => {
+                    await template.createNewSection();
+                    await template.checkReq();
+                    await template.page.waitForTimeout(2000)
+                });
+                test.only("verifiy the credit hours with and without range", async () => {
+                    await template.createNewSection();
+                    await template.creditHoursValidation();
+                    //await template.updateInLibrary();  // current bug is blocking this.
+                });
+                            
 
 
 
-    // add text type requirment (prset) 
-    //add a elective type requirment 
-    // add a check type requirment
-    //verifiy the credit hours with and without range 
+    
+    
+    //add a milestone   - - -  -- 
+    //
     // verify the optional field minimun grade 
     //verifiy the optional notes insidee the requirment 
     // veryfy the preview 

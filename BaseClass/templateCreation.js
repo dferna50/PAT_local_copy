@@ -29,6 +29,7 @@ class templateCreation{
         this.addTextOption = this.page.getByRole('button', { name: 'Add text option' });
         this.deleteGroup = this.page.getByRole('button', { name: 'Delete group' });
         this.deleteConformation = this.page.getByRole('button', { name: 'Yes, delete this group' });
+        this.andOeratorButton = this.page.locator(".mb-5>.btn-maroon");
     }
 
     async navigateToTemplatePage() { 
@@ -61,6 +62,7 @@ class templateCreation{
             await this.sectionHeadingInput.fill('');
             let sectionName = faker.location.street();
             await this.sectionHeadingInput.fill("New Section - " + sectionName);
+            await this.page.waitForTimeout(100);   // Need the tests to slow down to appropertly click the button next.
             await this.finalCreateSectionButton.click();
             await expect(this.page.locator('.px-0 > div:nth-child(2)').first()).toContainText("New Section - " + sectionName)  // first section in the template
                 }
@@ -154,13 +156,67 @@ class templateCreation{
                     await this.updateInLibraryButton.click(); 
                    // await this.page.waitForTimeout(2000);
                     await expect( this.page.locator('.focus-off > div > .row')).toContainText(fakerGroupName);
-
-                   // await this.page.locator().focus().click();
+                }
+                async electiveReq(){
+                    let courseSubject = ["ENG", "JPN","HST"] 
+                    let randomIndexSubject = Math.floor(Math.random() * courseSubject.length);
+                    let randomSubject = courseSubject[randomIndexSubject];
+                    let randomIndex = Math.floor(Math.random() * 8);
+                    await this.editSectionButton.click();
+                    await this.addRequirmentButton.click();
+                    await this.page.selectOption('#componentSelect', { value: 'req_elective' });
+                    await this.page.locator('#componentsContainer').getByRole('combobox').nth(3).click();  // level dropdown --- cannot add selectoption
+                for (let i = 0; i < randomIndex-2; i++) {
+                    await this.page.keyboard.press("ArrowDown");
+                  }
+                await this.page.keyboard.press("Enter")
+                await this.andOeratorButton.click();
+                await this.page.selectOption('#componentSelect', { value: 'req_elective' });
+                await this.page.selectOption('div:nth-child(2) > div > div:nth-child(4) > div:nth-child(2) > .text-gray-7', {value: 'subject'});
+                for (let i = 0; i < randomIndex-2; i++) {
+                    await this.page.keyboard.press("ArrowDown");
+                  }
+                await this.page.keyboard.press("Enter")
+                await this.page.getByPlaceholder('Subject').fill(randomSubject)
+                await this.saveSectionNotes.click() // Save requirments /// reusing the same locator
+               // await this.updateInLibraryButton.click();
+                                }
+                async checkReq(){
+                    await this.editSectionButton.click();
+                    for(var i=0; i< 5 ; i++) {
+                    await this.addRequirmentButton.click();
+                    let randomIndex = Math.floor(Math.random() * 1) + 1
+                    await this.page.selectOption('#componentSelect', { value: 'req_check' });
+                    await this.page.selectOption("#componentsContainer > .border-bottom> .d-flex .d-flex > .text-gray-7", {index: randomIndex});
+                    if(randomIndex ==1) {
+                        let randomGPACatag = Math.floor(Math.random() * 3) +1
+                    await this.page.selectOption("#componentsContainer > .border-bottom> .d-flex .d-flex> .p-1:nth-child(2)", {index: randomGPACatag } );
+                    if(randomGPACatag ==3){
+                        await this.page.locator("#componentsContainer input:nth-child(1)").fill("ENG")
+                    }
+                    
+                    let randomGPA = Math.floor(Math.random() * 2) +1
+                    await this.page.locator("#componentsContainer input:nth-child(2)").fill(randomGPA.toString());
+                    }
+                    await this.saveSectionNotes.click()// Save requirments /// reusing the same locator
+                }
+                 
+                    // await this.updateInLibraryButton.click();
+                }
+                async creditHoursValidation() { 
+                    await this.editSectionButton.click();
+                    await this.addRequirmentButton.click();
 
                     
 
 
                 }
+                async updateInLibrary() {
+                    await this.updateInLibraryButton.click();
+                }
+                                
+                    
+                
 
                 
 }
