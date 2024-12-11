@@ -12,9 +12,7 @@ pipelines:
         caches:
           - node
         script:
-          - npm ci  # Clean install dependencies
-          - npx playwright install-deps  # Install Playwright system dependencies
-          - npx playwright install  # Install browsers
+         
 
     
           - npx playwright test templateListPage.spec.js # Run Playwright tests
