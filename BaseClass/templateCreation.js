@@ -30,6 +30,8 @@ class templateCreation{
         this.deleteGroup = this.page.getByRole('button', { name: 'Delete group' });
         this.deleteConformation = this.page.getByRole('button', { name: 'Yes, delete this group' });
         this.andOeratorButton = this.page.locator(".mb-5>.btn-maroon");
+        this.minCreditHour = this.page.getByPlaceholder('Min');
+        this.setRangeCheckbox = this.page.locator("#loneCheckbox1");
     }
 
     async navigateToTemplatePage() { 
@@ -60,11 +62,12 @@ class templateCreation{
             await this.addSectionButton.click(); 
             await this.createNewSectionButton.click();
             await this.sectionHeadingInput.fill('');
-            let sectionName = faker.location.street();
-            await this.sectionHeadingInput.fill("New Section - " + sectionName);
-            await this.page.waitForTimeout(100);   // Need the tests to slow down to appropertly click the button next.
+            let sectionName = faker.word.words(3);
+            await this.sectionHeadingInput.fill(sectionName);
+            //await this.page.waitForTimeout(100);   // Need the tests to slow down to appropertly click the button next.
+            await expect(this.finalCreateSectionButton).toBeVisible();
             await this.finalCreateSectionButton.click();
-            await expect(this.page.locator('.px-0 > div:nth-child(2)').first()).toContainText("New Section - " + sectionName)  // first section in the template
+            await expect(this.page.locator('.px-0 > div:nth-child(2)').first()).toContainText(sectionName , { timeout: 120000 })  // first section in the template
                 }
                 async existingSection(){ 
                     await this.addSectionButton.click(); 
@@ -206,10 +209,19 @@ class templateCreation{
                 async creditHoursValidation() { 
                     await this.editSectionButton.click();
                     await this.addRequirmentButton.click();
-
+                    var minCredit = Math.floor(Math.random()*5)
+                    await this.minCreditHour.fill(minCredit.toString());
+                    await this.saveSectionNotes.click()// Save requirments /// reusing the same locator
+                   // await this.addRequirmentButton.click();
+                   // await this.minCreditHour.fill(minCredit.toString());
+                    // await this.setRangeCheckbox.click() // set input
+                    // var maxCredit = Math.floor(Math.random()*3) + minCredit
+                    // await this.page.getByPlaceholder("Max").fill(maxCredit.toString())    ///// to be fixed in the future. not really improta
+                }
+                async minimumGradeVald(){
+                    await this.editSectionButton.click();
+                    await this.addRequirmentButton.click();
                     
-
-
                 }
                 async updateInLibrary() {
                     await this.updateInLibraryButton.click();

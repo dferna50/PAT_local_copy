@@ -93,20 +93,24 @@ test.describe('Test the Creation of templates', () => {
              test("14 Add a Check type requirment " ,async () => {
                     await template.createNewSection();
                     await template.checkReq();
-                    await template.page.waitForTimeout(2000)
+                    //await template.page.waitForTimeout(2000)
                 });
-                test.only("verifiy the credit hours with and without range", async () => {
+                test("15 verifiy the credit hours with and without range", async () => {
                     await template.createNewSection();
                     await template.creditHoursValidation();
-                    //await template.updateInLibrary();  // current bug is blocking this.
+                    await template.updateInLibrary();  // current bug is blocking this.
+                    await template.page.waitForTimeout(2000)
                 });
-                            
+                test.only("16 verify the optional field minimun grade", async () => { 
+                    await template.createNewSection();
+                    await template.minimumGradeVald();
+                })
 
 
 
     
     
-    //add a milestone   - - -  -- 
+    
     //
     // verify the optional field minimun grade 
     //verifiy the optional notes insidee the requirment 
