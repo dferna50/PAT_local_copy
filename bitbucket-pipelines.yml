@@ -8,7 +8,7 @@ image: mcr.microsoft.com/playwright:v1.49.0-noble  # Use a Node.js Docker image
 pipelines:
   default:
     - step:
-        name: Install Dependencies
+        name: Run Playwright tests
         caches:
           - node
         script:
@@ -16,5 +16,9 @@ pipelines:
           - npx playwright install-deps  # Install Playwright system dependencies
           - npx playwright install  # Install browsers
 
+<<<<<<< HEAD
     
           - npx playwright test Dashboard   # Run Playwright tests
+=======
+          - npx playwright test templateListPage.spec.js # Run Playwright tests
+>>>>>>> 94730fef993d4098a86898cdae93d5cbf218b029
