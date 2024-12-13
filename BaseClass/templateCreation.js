@@ -15,7 +15,7 @@ class templateCreation{
         this.finalCreateSectionButton = this.page.locator(".btn-maroon").filter({ hasText: 'Create new section' });
         this.firstItemInTheSection = this.page.locator('#root > div > div.position-relative.routes-wrap > div.d-flex.justify-content-end > div > div > div > div.container > div > div > div.pt-2.mt-2 > div.d-flex.align-items-center.gap-2 > div:nth-child(1) > div > div.py-0.dropdown-menu.show > a:nth-child(2)')
         //this.firstSectionname = this.page.locator(".lh-1");
-        this.editSectionButton = this.page.getByRole('button', { name: 'Edit section' });
+        this.editSectionButton = this.page.getByRole('button', { name: 'Edit section' }).first();
         this.addSectionNotes = this.page.getByRole('button', { name: 'Add description/notes' });
         this.sectionNotesTextBox = this.page.getByPlaceholder('Describe this section or add');
         this.saveSectionNotes = this.page.getByRole('dialog').getByRole('button', { name: 'Save' });
@@ -27,11 +27,12 @@ class templateCreation{
         this.groupNameTextbox = this.page.getByRole('textbox').nth(1)
         this.createNewOption = this.page.getByRole('button', { name: 'Create new option' })
         this.addTextOption = this.page.getByRole('button', { name: 'Add text option' });
-        this.deleteGroup = this.page.getByRole('button', { name: 'Delete group' });
+        this.deleteGroup = this.page.getByRole('button', { name: 'Delete group' }).first();
         this.deleteConformation = this.page.getByRole('button', { name: 'Yes, delete this group' });
         this.andOeratorButton = this.page.locator(".mb-5>.btn-maroon");
         this.minCreditHour = this.page.getByPlaceholder('Min');
         this.setRangeCheckbox = this.page.locator("#loneCheckbox1");
+        this.validationRuleTab = this.page.getByRole('button', { name: 'Validation Rules' })
     }
 
     async navigateToTemplatePage() { 
@@ -64,14 +65,14 @@ class templateCreation{
             await this.sectionHeadingInput.fill('');
             let sectionName = faker.word.words(3);
             await this.sectionHeadingInput.fill(sectionName);
-            //await this.page.waitForTimeout(100);   // Need the tests to slow down to appropertly click the button next.
-            await expect(this.finalCreateSectionButton).toBeVisible();
+            await this.page.waitForTimeout(1000);   // Need the tests to slow down to appropertly click the button next.
+            await expect(this.finalCreateSectionButton).toBeEnabled();
             await this.finalCreateSectionButton.click();
             await expect(this.page.locator('.px-0 > div:nth-child(2)').first()).toContainText(sectionName , { timeout: 120000 })  // first section in the template
                 }
                 async existingSection(){ 
                     await this.addSectionButton.click(); 
-                    await this.page.waitForTimeout(2000);
+                    await this.page.waitForTimeout(5000);
                     await this.firstItemInTheSection.click();   
                 }
                 async editSectionandAddSectionNotes() { 
@@ -209,23 +210,44 @@ class templateCreation{
                 async creditHoursValidation() { 
                     await this.editSectionButton.click();
                     await this.addRequirmentButton.click();
-                    var minCredit = Math.floor(Math.random()*5)
+                    var minCredit = Math.floor(Math.random()*5) + 1
                     await this.minCreditHour.fill(minCredit.toString());
                     await this.saveSectionNotes.click()// Save requirments /// reusing the same locator
-                   // await this.addRequirmentButton.click();
-                   // await this.minCreditHour.fill(minCredit.toString());
-                    // await this.setRangeCheckbox.click() // set input
-                    // var maxCredit = Math.floor(Math.random()*3) + minCredit
-                    // await this.page.getByPlaceholder("Max").fill(maxCredit.toString())    ///// to be fixed in the future. not really improta
+                   await this.addRequirmentButton.click();
+                   await this.minCreditHour.fill(minCredit.toString());
+                    await this.page.getByText('Set range').click() // set input
+                    var maxCredit = Math.floor(Math.random()*3) + minCredit
+                    await this.page.getByPlaceholder("Max").fill(maxCredit.toString()) 
+                    await this.saveSectionNotes.click()// Save requirments /// reusing the same locator
+                  
                 }
                 async minimumGradeVald(){
                     await this.editSectionButton.click();
                     await this.addRequirmentButton.click();
-                    
+                    await this.page.selectOption('#componentSelect', { value: 'req_text' });
+                    await this.page.selectOption("#componentsContainer > div > div > div:nth-child(3) > div.d-flex.gap-2 > div.mb-2 > select", {value: "custom_text"})
+                    let customText = faker.lorem.paragraph();
+                    await this.page.locator('textarea[name="customText"]').fill(customText);
+                    let randomminGrade = Math.floor(Math.random() * 7) +2
+                    console.log("the random chosen min grade index - " + randomminGrade)
+                    await this.page.selectOption("div:nth-child(5)> div:nth-child(2) > select" , {index:randomminGrade});
+                    await this.saveSectionNotes.click()// Save requirments /// reusing the same locator
+
+                }
+                async validationRules(){
+                    await this.validationRuleTab.click(); 
+                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').first().click();
+                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').first().fill('50');
+                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(1).click();
+                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(1).fill('20');
+                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(1).press('Tab');
+                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(2).fill('4');
+                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(2).press('Tab');
                 }
                 async updateInLibrary() {
                     await this.updateInLibraryButton.click();
                 }
+                
                                 
                     
                 

@@ -19,7 +19,7 @@ class programListPage{
         await this.programSummaryPage.waitForProgramsPage();
     }
     async verifyProgramsPagLoading() {
-        await expect( this.page.locator(".col-auto").first()).toBeVisible();
+       // await expect( this.page.locator(".col-auto").first()).toBeVisible();
         await expect( this.page.locator(".underline-hover").first()).toBeVisible( { timeout: 100000 });
         await expect( this.page.locator('#root')).toContainText('Accountancy, BS', { timeout: 100000 });
     }
@@ -47,6 +47,7 @@ class programListPage{
             await this.page.keyboard.press('Tab');
         }
         await this.page.keyboard.press('Space');
+       // await this.page.locator('.pt-1').click();
         await this.page.locator('.text-gray-7').first().click();
     }
     

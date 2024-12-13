@@ -1,5 +1,5 @@
 const { chromium } = require('playwright');
-const fs = require('fs');
+//const fs = require('fs');
 
 (async () => {
   const browser = await chromium.launch({ headless: false }); // headless: false to manually approve Duo Push
@@ -20,9 +20,9 @@ const fs = require('fs');
   // Wait for Duo 2FA approval manually
   // Save session state
   await page.waitForURL('https://pat-dev.apps.asu.edu/**');
-  const cookies = await page.context().cookies();
+  //const cookies = await page.context().cookies();
   await context.storageState({ path: 'auth.json' });
-  fs.writeFileSync('cookies.json', JSON.stringify(cookies));
+  //fs.writeFileSync('cookies.json', JSON.stringify(cookies));
   await browser.close();
   
 })();
