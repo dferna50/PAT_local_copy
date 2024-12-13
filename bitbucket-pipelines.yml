@@ -15,10 +15,7 @@ pipelines:
           - npm ci  # Clean install dependencies
           - npx playwright install-deps  # Install Playwright system dependencies
           - npx playwright install  # Install browsers
-
-<<<<<<< HEAD
     
           - npx playwright test Dashboard   # Run Playwright tests
-=======
-          - npx playwright test templateListPage.spec.js # Run Playwright tests
->>>>>>> 94730fef993d4098a86898cdae93d5cbf218b029
+
+
