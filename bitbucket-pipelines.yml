@@ -16,6 +16,6 @@ pipelines:
           - npx playwright install-deps  # Install Playwright system dependencies
           - npx playwright install  # Install browsers
     
-          - npx playwright test Dashboard   # Run Playwright tests
+          - npx playwright test Dashboard  # Run Playwright tests
 
 
