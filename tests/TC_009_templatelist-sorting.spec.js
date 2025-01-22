@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { templateList } = require('../../BaseClass/templateList.js');
+const { templateList } = require('.../BaseClass/templateList.js');
 
     let context, templatelist;
 
@@ -16,12 +16,11 @@ const { templateList } = require('../../BaseClass/templateList.js');
         await context.close();
     });
 
-    test('Verify labels', async () => {
-        await templatelist.lables();
+    test('Verify Template List for the Selected Catalog Year', async () => {
+        await templatelist.selectCatalogYear(5);
     });
 
-    test('Verify the new template button functionality', async () => {
-        await templatelist.page.getByRole('button', { name: '+ New template' }).click();
-        expect(await templatelist.page.locator('#root')).toContainText('Untitled template');
+    test('Verify Sorting Functionality', async () => {
+        await templatelist.sorting();
     });
 

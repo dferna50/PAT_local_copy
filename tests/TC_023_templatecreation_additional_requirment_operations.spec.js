@@ -1,5 +1,6 @@
+
 const { test, expect } = require('@playwright/test');
-const { templateCreation } = require('../../BaseClass/templateCreation.js');
+const { templateCreation } = require('../BaseClass/templateCreation.js');
 
     let context;
     let template;
@@ -17,22 +18,19 @@ const { templateCreation } = require('../../BaseClass/templateCreation.js');
         await context.close();
     });
 
-    test("Add a course type requirement", async () => {
+  test("Add a preset text type requirement", async () => {
+        await template.createTextOption(0);
+        await template.page.getByRole('button', { name: 'Sections', exact: true }).click();
         await template.createNewSection();
-        await template.addCourseTypeRequirment();
+        await template.addPresetTextOption();
     });
 
-    test("Add a general studies requirement type", async () => {
+    test("Add an elective type requirement", async () => {
         await template.createNewSection();
-        await template.addGeneralStudiesRequirment();
+        await template.electiveReq();
     });
 
-    test("Add a custom text requirement", async () => {
-        test.setTimeout(120000);
-        await template.navigateToTemplatePage();
-        await template.clickCreateTemplateButton();
+    test("Add a check type requirement", async () => {
         await template.createNewSection();
-        await template.customTextReq();
+        await template.checkReq();
     });
-
-

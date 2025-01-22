@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { ProgramSummaryPage } = require('../../BaseClass/ProgramSummary.js');
-const { templateList } = require('../../BaseClass/templateList.js');
+const { templateList } = require('../BaseClass/templateList.js');
 
     let context, programSummaryPage, templatelist;
 

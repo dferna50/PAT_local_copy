@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { programListPage } = require('../../BaseClass/programListPage.js');
+const { programListPage } = require('../BaseClass/programListPage.js');
 
     let context, programlist;
 

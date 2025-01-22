@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { templateCreation } = require('../../BaseClass/templateCreation.js');
+const { templateCreation } = require('../BaseClass/templateCreation.js');
 
     let context;
     let template;

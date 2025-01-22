@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { checksheetCreation } = require('../../BaseClass/checksheetCreation.js');
+const { checksheetCreation } = require('../BaseClass/checksheetCreation.js');
 
 let context, checksheet;
 let usedCourses = [];

@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { templateCreation } = require('../../BaseClass/templateCreation.js');
+const { templateCreation } = require('../BaseClass/templateCreation.js');
 
     let context;
     let template;
@@ -17,12 +17,22 @@ const { templateCreation } = require('../../BaseClass/templateCreation.js');
         await context.close();
     });
 
-    test("Navigate to template creation page", async () => {
-        await template.navigateToTemplatePage();
-        await template.clickCreateTemplateButton();
+    test("Add a course type requirement", async () => {
+        await template.createNewSection();
+        await template.addCourseTypeRequirment();
     });
 
-    test("Create a blank template", async () => {
-        await template.createBlankTemplate();
+    test("Add a general studies requirement type", async () => {
+        await template.createNewSection();
+        await template.addGeneralStudiesRequirment();
     });
+
+    test("Add a custom text requirement", async () => {
+        test.setTimeout(120000);
+        await template.navigateToTemplatePage();
+        await template.clickCreateTemplateButton();
+        await template.createNewSection();
+        await template.customTextReq();
+    });
+
 

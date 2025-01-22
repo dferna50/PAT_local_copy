@@ -1,6 +1,5 @@
-
 const { test, expect } = require('@playwright/test');
-const { templateCreation } = require('../../BaseClass/templateCreation.js');
+const { templateCreation } = require('../BaseClass/templateCreation.js');
 
     let context;
     let template;
@@ -18,19 +17,21 @@ const { templateCreation } = require('../../BaseClass/templateCreation.js');
         await context.close();
     });
 
-  test("Add a preset text type requirement", async () => {
-        await template.createTextOption(0);
-        await template.page.getByRole('button', { name: 'Sections', exact: true }).click();
+    test("Verify the credit hours with and without range", async () => {
         await template.createNewSection();
-        await template.addPresetTextOption();
+        await template.creditHoursValidation();
+        await template.updateInLibrary();
     });
 
-    test("Add an elective type requirement", async () => {
+    test("Verify the optional field minimum grade", async () => {
         await template.createNewSection();
-        await template.electiveReq();
+        await template.minimumGradeVald();
+        await template.updateInLibrary();
     });
 
-    test("Add a check type requirement", async () => {
-        await template.createNewSection();
-        await template.checkReq();
+    test("Verify validation rules", async () => {
+        test.setTimeout(120000);
+        await template.validationRules();
+        await template.page.waitForTimeout(2000);
     });
+
