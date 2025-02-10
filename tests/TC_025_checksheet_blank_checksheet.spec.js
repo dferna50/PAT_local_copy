@@ -20,7 +20,7 @@ test.afterAll(async () => {
 test("Create a new blank checksheet", async () => { 
     await checksheet.navigateToStatusTabAndSelect(2);
     const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);
+    usedCourses.push(element);  // for destuction /// good to have
     await checksheet.createBlankChecksheet(element);
     await checksheet.page.waitForTimeout(2000);    
 });

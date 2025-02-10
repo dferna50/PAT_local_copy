@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { checksheetCreation } = require('../../BaseClass/checksheetCreation.js');
+const { checksheetCreation } = require('../BaseClass/checksheetCreation.js');
 const { faker } = require('@faker-js/faker');
 
 let context, checksheet;

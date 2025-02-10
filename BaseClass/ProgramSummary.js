@@ -17,6 +17,7 @@ class ProgramSummaryPage {
     this.viewAllPrograms = page.getByRole('link', { name: 'View all programs' })
     this.adminLink = page.getByTitle('Admin');
     this.settings = page.getByRole('link', { name: 'Settings' });
+    this.rollover = page.getByRole('link', { name: 'Start rollover' })
     }
 
     async programsLink(){
@@ -85,6 +86,11 @@ class ProgramSummaryPage {
         this.checkLinkAccessibility(this.subplansLink);
         await this.subplansLink.click();
      }
+     async clickRolloverLink(){ 
+        await this.adminLink.click();
+        this.checkLinkAccessibility(this.rollover);
+        await this.rollover.click();
+     }
      async checkLinkAccessibility(link) {
         await link.isVisible();
         await link.isEnabled();
@@ -103,6 +109,9 @@ class ProgramSummaryPage {
       }
       async waitForSettingsPage(){
         await this.page.waitForURL('https://pat-dev.apps.asu.edu/settings');
+      }
+      async waitForRolloverPage(){ 
+        await this.page.waitForURL('https://pat-dev.apps.asu.edu/rollover');
       }
      async noNetworkSimulation(){
         await this.page.route('**/*', route => route.abort());

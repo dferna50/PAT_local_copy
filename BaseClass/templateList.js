@@ -7,7 +7,9 @@ class templateList{
     constructor(page) {
         this.page = page;
         this.programSummaryPage = new ProgramSummaryPage(page);
-        this.catalogYearDropdown = page.locator('div').filter({ hasText: /^Catalog year2023-20242024-20252025-20262026-20272027-20282028-2029$/ }).getByRole('combobox');;
+        this.rootLocator = page.locator('#root');
+        this.catalogYearDropdown = page.locator('div').filter({ hasText: /^Catalog year2023-20242024-20252025-20262026-20272027-20282028-2029$/ }).getByRole('combobox');
+        this.sortDropdown = page,locator('div').filter({ hasText: /^Sort byName \(A-Z\)Name \(Z-A\)$/ }).getByRole('combobox')
 
     }
     async navigateToTemplatePage() { 
@@ -24,11 +26,11 @@ class templateList{
         }
     }
     async sorting(){
-        await expect(this.page.locator('#root')).toContainText('Name (A-Z)');
-        await this.page.locator('div').filter({ hasText: /^Sort byName \(A-Z\)Name \(Z-A\)$/ }).getByRole('combobox').click();
+        await expect(this.rootLocator).toContainText('Name (A-Z)');
+        await this.page.sortDropdown.click();
         await this.page.keyboard.press('ArrowDown');
         await this.page.keyboard.press('Enter')
-        await expect(this.page.locator('#root')).toContainText('Name (A-Z)Name (Z-A)');    //needs review   
+        await expect(this.rootLocator).toContainText('Name (A-Z)Name (Z-A)');    //needs review   
     }
     async lables(){
         await expect(this.page.locator('div').filter({ hasText: /^Templates$/ })).toHaveText("Templates")

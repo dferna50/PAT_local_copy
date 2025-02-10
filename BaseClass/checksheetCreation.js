@@ -6,6 +6,8 @@ class checksheetCreation{
     constructor(page) {
         this.page = page;
         this.programSummaryPage = new ProgramSummaryPage(page);
+        this.statusButton = page.locator('button').filter({ hasText: 'Status' }) // on the create blank template page
+        this.programsList = page.locator('.text-gray-7');
 
     }
     async navigateToChecksheetPage() { 
@@ -17,15 +19,15 @@ class checksheetCreation{
         }
 
         async navigateToStatusTabAndSelect(optionIndex) {
-            await this.page.locator('button').filter({ hasText: 'Status' }).click();
+            await this.statusButton.click();
             for (let i = 0; i < optionIndex; i++) {
                 await this.page.keyboard.press('Tab');
             }
             await this.page.keyboard.press('Space');
         }
         async createBlankChecksheet(element) {
-            console.log("The element pused is = "+ element)
-           const elements = await this.page.locator('.text-gray-7').all();
+            console.log("The element pushed is = "+ element)
+           const elements = await this.programsList.all();
            const randomIndex2 = Math.floor(Math.random() * elements.length);
            if (await elements[randomIndex2].isVisible()) {
             await elements[randomIndex2].click();

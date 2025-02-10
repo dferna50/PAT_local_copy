@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { checksheetCreation } = require('../../BaseClass/checksheetCreation.js');
+const { checksheetCreation } = require('../BaseClass/checksheetCreation.js');
 const { faker } = require('@faker-js/faker');
 
 let context, checksheet;
@@ -26,9 +26,10 @@ test("Return checksheet to college", async () => {
     await checksheet.lockChecksheet();
     await checksheet.page.locator('.button-link').click(); 
     const returnReason = faker.lorem.sentence();
-    await checksheet.page.locator('.mb-6').fill(returnReason);
+    await checksheet.page.locator('.mb-6').first().fill(returnReason);
     await checksheet.page.getByRole('button', { name: 'Submit' }).click();
     await checksheet.page.getByRole('button', { name: 'Okay' }).click();
+    await checksheet.page.waitForTimeout(2000)
     await checksheet.page.reload();
     expect(await checksheet.page.locator('.mb-1 > div').first().textContent()).toContain('Pending college/school submission');
     await checksheet.page.reload();
@@ -47,6 +48,7 @@ test("Return checksheet to department", async () => {
     await checksheet.page.locator('#departmentRadio').click();
     await checksheet.page.getByRole('button', { name: 'Submit' }).click();
     await checksheet.page.getByRole('button', { name: 'Okay' }).click();
+    await checksheet.page.waitForTimeout(2000)
     await checksheet.page.reload();
     expect(await checksheet.page.locator('.mb-1 > div').first().textContent()).toContain('Pending department submission');
     await checksheet.page.reload();

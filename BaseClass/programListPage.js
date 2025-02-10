@@ -54,7 +54,7 @@ class programListPage{
     async  verifyStatusText(expectedText) {
         await this.page.waitForTimeout(2000);
         await this.page.waitForURL("https://pat-dev.apps.asu.edu/checksheet*");
-        expect(await this.page.getByText(expectedText)).toBeVisible();
+        expect(await this.page.getByText(expectedText).first()).toBeVisible();
     }
     async dropdownValues() { 
         const dropdownoption =  await this.page.locator('.show .dropdown-item-text').all();
