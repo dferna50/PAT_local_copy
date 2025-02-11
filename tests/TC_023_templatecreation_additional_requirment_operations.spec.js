@@ -1,9 +1,7 @@
 
-const { test, expect } = require('@playwright/test');
-const { templateCreation } = require('../BaseClass/templateCreation.js');
+const { test, expect } = require('@playwright/test'), { templateCreation } = require('../BaseClass/templateCreation.js');
 
-    let context;
-    let template;
+    let context, template;
 
     test.beforeAll(async ({ browser }) => {
         test.setTimeout(120000)
@@ -14,9 +12,7 @@ const { templateCreation } = require('../BaseClass/templateCreation.js');
         await template.clickCreateTemplateButton();
     });
 
-    test.afterAll(async () => {
-        await context.close();
-    });
+    test.afterAll(async () => {await context.close();    });
 
   test("Add a preset text type requirement", async () => {
         await template.createTextOption(0);

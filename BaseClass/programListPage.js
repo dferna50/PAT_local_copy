@@ -1,6 +1,5 @@
 const { test, expect } = require('@playwright/test');
 const { ProgramSummaryPage } = require('../BaseClass/ProgramSummary.js');
-//let programSummaryPage;
 class programListPage{
 
     constructor(page) {
@@ -8,6 +7,9 @@ class programListPage{
         this.programSummaryPage = new ProgramSummaryPage(page);
         this.catalogYearDropdown = page.locator('div').filter({ hasText: /^Catalog year2023-20242024-20252025-20262026-20272027-20282028-2029$/ }).getByRole('combobox');
         this.rootLocator = page.locator('#root');
+        this.statusButton = page.locator('button').filter({ hasText: 'Status' })
+        this.statusValues = page.locator('.text-gray-7').first();
+        this.firstProgram = page.locator(".underline-hover").first()
 
 
     }
@@ -19,9 +21,8 @@ class programListPage{
         await this.programSummaryPage.waitForProgramsPage();
     }
     async verifyProgramsPagLoading() {
-       // await expect( this.page.locator(".col-auto").first()).toBeVisible();
-        await expect( this.page.locator(".underline-hover").first()).toBeVisible( { timeout: 100000 });
-        await expect( this.page.locator('#root')).toContainText('Accountancy, BS', { timeout: 100000 });
+        await expect( this.firstProgram).toBeVisible( { timeout: 100000 });
+        await expect( this.rootLocator).toContainText('Accountancy, BS', { timeout: 100000 });
     }
     async selectCatalogYear(times, text, timeout = 50000) {
         await this.catalogYearDropdown.click();
@@ -42,13 +43,13 @@ class programListPage{
 
     }
     async  navigateToStatusTabAndSelect(optionIndex) {
-        await this.page.locator('button').filter({ hasText: 'Status' }).click();
+        await this.statusButton.click();
         for (let i = 0; i < optionIndex; i++) {
             await this.page.keyboard.press('Tab');
         }
         await this.page.keyboard.press('Space');
        // await this.page.locator('.pt-1').click();
-        await this.page.locator('.text-gray-7').first().click();
+        await this.statusValues.click();
     }
     
     async  verifyStatusText(expectedText) {
@@ -60,7 +61,7 @@ class programListPage{
         const dropdownoption =  await this.page.locator('.show .dropdown-item-text').all();
         for (const option of dropdownoption) {
          await option.click();
-         await expect (await this.page.locator('.text-gray-7').first()).toBeVisible();
+         await expect (await this.statusValues).toBeVisible();
      }
     }
 }

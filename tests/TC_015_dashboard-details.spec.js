@@ -1,12 +1,9 @@
-const { test, expect } = require('@playwright/test');
-const { ProgramSummaryPage } = require('../BaseClass/ProgramSummary.js');
+const { test, expect } = require('@playwright/test'), { ProgramSummaryPage } = require('../BaseClass/ProgramSummary.js');
 
     let context, programSummaryPage;
 
     test.beforeAll(async ({ browser }) => {
-        context = await browser.newContext({
-            storageState: 'auth.json',
-        });
+        context = await browser.newContext({storageState: 'auth.json',});
         const page = await context.newPage();
         programSummaryPage = new ProgramSummaryPage(page);
         await programSummaryPage.goto();

@@ -1,20 +1,15 @@
-const { test, expect } = require('@playwright/test');
-const { adminPages } = require('../BaseClass/adminPages.js');
+const { test, expect } = require('@playwright/test'), { adminPages } = require('../BaseClass/adminPages.js');
 
     let context, adminPage;
 
     test.beforeAll(async ({ browser }) => {
-        context = await browser.newContext({
-            storageState: 'auth.json',
-        });
+        context = await browser.newContext({storageState: 'auth.json',        });
         const page = await context.newPage();
         adminPage = new adminPages(page);
         await adminPage.navigateToTemplatePage();
     });
 
-    test.afterAll(async () => {
-        await context.close();
-    });
+    test.afterAll(async () => {        await context.close();    });
 
     test('Verify Navigation to the "Template List" Page', async () => {
         await adminPage.navigateToTemplatePage();

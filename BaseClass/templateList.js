@@ -9,7 +9,7 @@ class templateList{
         this.programSummaryPage = new ProgramSummaryPage(page);
         this.rootLocator = page.locator('#root');
         this.catalogYearDropdown = page.locator('div').filter({ hasText: /^Catalog year2023-20242024-20252025-20262026-20272027-20282028-2029$/ }).getByRole('combobox');
-        this.sortDropdown = page,locator('div').filter({ hasText: /^Sort byName \(A-Z\)Name \(Z-A\)$/ }).getByRole('combobox')
+        this.sortDropdown = page.locator('div').filter({ hasText: /^Sort byName \(A-Z\)Name \(Z-A\)$/ }).getByRole('combobox')
 
     }
     async navigateToTemplatePage() { 
@@ -27,7 +27,7 @@ class templateList{
     }
     async sorting(){
         await expect(this.rootLocator).toContainText('Name (A-Z)');
-        await this.page.sortDropdown.click();
+        await this.sortDropdown.click();
         await this.page.keyboard.press('ArrowDown');
         await this.page.keyboard.press('Enter')
         await expect(this.rootLocator).toContainText('Name (A-Z)Name (Z-A)');    //needs review   

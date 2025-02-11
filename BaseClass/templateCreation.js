@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const { faker } = require('@faker-js/faker');
+const validationData = require('../BaseClass/validationText.json');
 const { ProgramSummaryPage } = require('../BaseClass/ProgramSummary.js');
 let  fakerGroupName = faker.lorem.words(4);
 
@@ -8,10 +9,10 @@ class templateCreation{
 
     constructor(page) {
         this.page = page;
-        this.rootLocator = page.locator('#root');
-        this.alertcontent = page.locator(".alert-content")
-        this.firstSection = page.locator('.px-0 > div:nth-child(2)').first();
-        this.dropdowns = page.locator('#componentsContainer').getByRole('combobox')
+        this.rootLocator = this.page.locator('#root');
+        this.alertcontent = this.page.locator(".alert-content")
+        this.firstSection = this.page.locator('.px-0 > div:nth-child(2)').first();
+        this.dropdowns = this.page.locator('#componentsContainer').getByRole('combobox')
         this.programSummaryPage = new ProgramSummaryPage(page);
         this.addSectionButton = this.page.locator(".btn-gold");
         this.createNewSectionButton = this.page.locator(".bg-maroon");
@@ -36,6 +37,8 @@ class templateCreation{
         this.minCreditHour = this.page.getByPlaceholder('Min');
         this.setRangeCheckbox = this.page.locator("#loneCheckbox1");
         this.validationRuleTab = this.page.getByRole('button', { name: 'Validation Rules' })
+        this.validationRuleCells = this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton');
+        this.newTemplateButton = this.page.getByRole('button', { name: '+ New template' })
     }
 
     async navigateToTemplatePage() { 
@@ -44,8 +47,8 @@ class templateCreation{
         await this.programSummaryPage.waitForTemplatesPage();
         }
         async clickCreateTemplateButton(){
-        await  this.page.getByRole('button', { name: '+ New template' }).click();
-        await expect( this.rootLocator).toContainText('Untitled template');
+        await  this.newTemplateButton.click();
+        await expect( this.rootLocator).toContainText(validationData.defaultNewTemplateName);
         }
         async templatenameCreatorAndFinder(){
         let name = faker.lorem.word();
@@ -57,7 +60,7 @@ class templateCreation{
         await expect(this.rootLocator).toContainText(name);
         }
         async createBlankTemplate(){
-        await this.page.getByText('Untitled template').click();
+        await this.page.getByText(validationData.defaultNewTemplateName).click();
         await this.page.getByRole('textbox').nth(1).click();
         await this.page.getByRole('textbox').nth(1).fill('')
         }
@@ -229,22 +232,22 @@ class templateCreation{
                     let customText = faker.lorem.paragraph();
                     await this.page.locator('textarea[name="customText"]').fill(customText);
                     let randomminGrade = Math.floor(Math.random() * 7) +2
-                    console.log("the random chosen min grade index - " + randomminGrade)
+                   // console.log("the random chosen min grade index - " + randomminGrade)
                     await this.page.selectOption("div:nth-child(5)> div:nth-child(2) > select" , {index:randomminGrade});
                     await this.saveSectionNotes.click()// Save requirments /// reusing the same locator
 
                 }
                 async validationRules(){
                     await this.validationRuleTab.click(); 
-                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').first().click();
-                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').first().fill('50');
-                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(1).click();
-                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(1).fill('20');
-                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(1).press('Tab');
-                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(2).fill('4');
-                    await this.page.locator('div').filter({ hasText: /^MinMaxUpper Division$/ }).getByRole('spinbutton').nth(2).press('Tab');
+                    await this.validationRuleCells.first().click();
+                    await this.validationRuleCells.first().fill('50');
+                    await this.validationRuleCells.nth(1).click();
+                    await this.validationRuleCells.nth(1).fill('20');
+                    await this.validationRuleCells.nth(1).press('Tab');
+                    await this.validationRuleCells.nth(2).fill('4');
+                    await this.validationRuleCells.nth(2).press('Tab');
                 }
-                async updateInLibrary() {
+                async updateInLibrary() { 
                     await this.updateInLibraryButton.click();
                 }
                 

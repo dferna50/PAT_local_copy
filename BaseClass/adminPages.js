@@ -10,11 +10,11 @@ class adminPages{
         this.subplanCollegeLink = page.locator(".accordion-item").first();
         this.programsSearchBox = page.locator("div.d-flex.gap-3 > div:nth-child(1) > input");
         this.userAsurite = page.locator("#asurite");
-        this.userRole = age.locator("#role");
+        this.userRole = page.locator("#role");
         this.userColege = page.locator("#college");
         this.userDepartment = page.locator("#department");
         this.addUser = page.locator(".btn-primary");
-        this.asuriteField = his.page.getByRole('cell', { name: asurite });
+        this.asuriteField = page.getByRole('cell', { name: 'asurite' });
        // this.subplanActivateToggle = 
         //this.subplanCourseCode = page.locator("#card-body-1 > div:nth-child(2) > .col-md-4")
     }
@@ -65,7 +65,6 @@ class adminPages{
                         await this.page.locator(`#card-body-1 > div:nth-child(${i}) > div.col-md-2 > div > .toggle-switch`).click();
                         await this.page.locator('[title="Programs"]').click();
                         await this.page.locator('#dropdown-1-dropdown-item-1-1 > li.nav-button > a').click();
-                        //await expect(this.page.locator("div:nth-child(5) > div > div:nth-child(3)")).toBeVisible();
                         await this.programsSearchBox.fill(coursecode);
                         break;
                     }
@@ -80,11 +79,6 @@ class adminPages{
         console.log("The activated course code is:", coursecode);
         return coursecode;
     }
-    // async navigateToProgramPage(){
-    //     await this.programSummaryPage.goto();
-    //     await this.programSummaryPage.clickProgramsLink();
-    //     await this.programSummaryPage.waitForProgramsPage();
-    // }
 
     async navigateToTemplatePage() { 
     await this.programSummaryPage.goto();

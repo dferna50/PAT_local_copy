@@ -6,9 +6,21 @@ class checksheetCreation{
     constructor(page) {
         this.page = page;
         this.programSummaryPage = new ProgramSummaryPage(page);
-        this.statusButton = page.locator('button').filter({ hasText: 'Status' }) // on the create blank template page
+        this.statusButton = page.locator('button').filter({ hasText: 'Status' });
         this.programsList = page.locator('.text-gray-7');
-
+        this.newChecksheetLabel = page.getByText('New checksheet');
+        this.createFromBlankChecksheetRadio = page.locator('.form-check-label').first();
+        this.createChecksheetButton = page.getByRole('button', { name: 'Create checksheet' });
+        this.validationRulesHeading = page.getByRole('heading', { name: 'Validation Rules' });
+        this.addRequirmentButton = page.getByRole('button', { name: '+ Add requirement' }).first();
+        this.lockChecksheetButton = page.getByRole('button', { name: ' Lock' })
+        this.subjectTextBox = page.getByPlaceholder('Subject');
+        this.courseNumberTextBox = page.getByPlaceholder('Number'); 
+        this.courseListButton = page.getByRole('button', { name: 'Course Lists' })
+        this.newCourseListButton = page.getByRole('button', { name: 'New Course List' })
+        this.defaultCourseListName = page.getByPlaceholder('Untitled course list');
+        this.newItemButton = page.getByRole('button', { name: 'New item' })
+        this.saveButton = page.getByRole('button', { name: 'Save' });
     }
     async navigateToChecksheetPage() { 
         await this.programSummaryPage.goto();
@@ -26,7 +38,7 @@ class checksheetCreation{
             await this.page.keyboard.press('Space');
         }
         async createBlankChecksheet(element) {
-            console.log("The element pushed is = "+ element)
+           // console.log("The element pushed is = "+ element)  //
            const elements = await this.programsList.all();
            const randomIndex2 = Math.floor(Math.random() * elements.length);
            if (await elements[randomIndex2].isVisible()) {
@@ -35,47 +47,48 @@ class checksheetCreation{
             console.error("Element is not visible");
         }
 
+
        expect(await this.page.getByText('New checksheet')).toBeVisible();
-       await this.page.locator('.form-check-label').first().click();
-       await this.page.locator(".btn-gold").click();
+       await this.createFromBlankChecksheetRadio.click();
+       await this.createChecksheetButton.click();
         await this.page.getByText('Choose Template').click();
-        await  this.page.waitForTimeout(5000);
+        await  this.page.waitForTimeout(5000);  // timeout to wait for drop-down to load, can be handled better :)
         await this.page.waitForSelector('.dropdown-menu.show');
         const dropdownItems = await this.page.$$('.dropdown-menu.show .dropdown-item');
         const randomIndex = Math.floor(Math.random() * dropdownItems.length);
         await dropdownItems[randomIndex].click();
-        console.log(`Clicked item: ${await dropdownItems[randomIndex].innerText()}`);
-        await expect(this.page.getByRole('heading', { name: 'Validation Rules' })).toBeVisible();
+        //console.log(`Clicked item: ${await dropdownItems[randomIndex].innerText()}`);
+        await expect(this.validationRulesHeading).toBeVisible();
         }
         async addRequirment(){
-            await this.page.getByRole('button', { name: '+ Add requirement' }).click();
+            await this.addRequirmentButton.click();
         }
         async lockChecksheet(){
-            await this.page.getByRole('button', { name: ' Lock' }).click();
+            await this.lockChecksheetButton.click();
             await this.page.waitForTimeout(2000);
 
         }
         async addNewCourseTypeRequirment(){
             await this.page.selectOption("#componentSelect", {value: "req_course"});
-            await this.page.getByPlaceholder('Subject').fill("ENG");
-            await this.page.getByPlaceholder('Number').fill("101");
-            await this.page.getByRole('button', { name: 'Save' }).click(); 
+            await this.subjectTextBox.fill(faker.lorem.word(3).toString());
+            await this.courseNumberTextBox .fill(faker.lorem.word(3).toString());
+            await this.saveButton.click(); 
         }
 
         async createNewCourseList(){  
             await this.page.waitForTimeout(2000);   
-            await this.page.getByRole('button', { name: 'Course Lists' }).click();
-            await this.page.getByRole('button', { name: 'New Course List' }).click();
-            await this.page.getByPlaceholder('Untitled course list').click();
-            await this.page.getByPlaceholder('Untitled course list').fill(faker.lorem.words(2).toString());
+            await this.courseListButton.click();
+            await this.newCourseListButton.click();
+            await this.defaultCourseListName.click();
+            await this.defaultCourseListName.fill(faker.lorem.words(2).toString());
             for(let i = 0; i < 10; i++){
-            await this.page.getByRole('button', { name: 'New item' }).click();
-            await this.page.getByPlaceholder('Subject').click();
-            await this.page.getByPlaceholder('Subject').fill(faker.lorem.word(3) .toString());
-            await this.page.getByPlaceholder('Number').click();
-            await this.page.getByPlaceholder('Number').fill(faker.lorem.word(3).toString());
+            await this.newItemButton.click();
+            await this.subjectTextBox.click();
+            await this.subjectTextBox.fill(faker.lorem.word(3) .toString());
+            await this.courseNumberTextBox.click();
+            await this.courseNumberTextBox .fill(faker.lorem.word(3).toString());
             }
-            await this.page.getByRole('button', { name: 'Save' }).click();
+            await this.saveButton.click();
         }
         async editCourseList(){
             await this.page.locator('.pt-1>div').first().click();
@@ -84,13 +97,13 @@ class checksheetCreation{
             await this.page.locator('div:nth-child(3) > svg').first().click(); // delete the item in the course list
             await this.page.locator('.border-gray-2 > div > div:nth-child(2)').first().click(); // edit the item in the course list
             for(let i = 0; i < 5; i++){
-               await this.page.getByRole('button', { name: 'New item' }).click();
-               await this.page.getByPlaceholder('Subject').click();
-               await this.page.getByPlaceholder('Subject').fill(faker.lorem.word(3) .toString());
-               await this.page.getByPlaceholder('Number').click();
-               await this.page.getByPlaceholder('Number').fill(faker.lorem.word(3).toString());
+               await this.newItemButton.click();
+               await this.subjectTextBox.click();
+               await this.subjectTextBox.fill(faker.lorem.word(3) .toString());
+               await this.courseNumberTextBox .click();
+               await this.courseNumberTextBox .fill(faker.lorem.word(3).toString());
                }
-               await this.page.getByRole('button', { name: 'Save' }).click();     
+               await this.saveButton.click();     
               
             }
             async approveChecksheet(element){ 
@@ -114,9 +127,9 @@ class checksheetCreation{
 
         async checkChecksheetHistory(approveMessage, type){
             await this.page.getByRole('button', { name: 'History' }).click();
-            const element2 = await this.page.locator('.scrollbox > div > div:nth-child(1) > div > div:nth-child(2) > div:nth-child(1) > div.fw-bold').textContent();
+            const element2 = await this.page.locator('.flex-grow-1 > div:nth-child(1) > div.fw-bold').first().textContent();
             expect(element2).toContain(type);
-            const element3 = await this.page.locator('.scrollbox > div > div:nth-child(1) > div > div:nth-child(2) > div.mt-2').textContent();
+            const element3 = await this.page.locator('.flex-grow-1 > div.mt-2').first().textContent();
               expect(await element3).toContain("Message: " + approveMessage);
         }
 

@@ -1,22 +1,15 @@
-const { test, expect } = require('@playwright/test');
-const { checksheetCreation } = require('../BaseClass/checksheetCreation.js');
-const { faker } = require('@faker-js/faker');
+const { test, expect } = require('@playwright/test'), { checksheetCreation } = require('../BaseClass/checksheetCreation.js'), { faker } = require('@faker-js/faker');
 
-let context, checksheet;
-let usedCourses = [];
+let context, checksheet, usedCourses = [];
 
 test.beforeAll(async ({ browser }) => {
-    context = await browser.newContext({
-        storageState: 'auth.json',
-    });
+    context = await browser.newContext({ storageState: 'auth.json',});
     const page = await context.newPage();
     checksheet = new checksheetCreation(page);
     await checksheet.navigateToChecksheetPage();
 });
 
-test.afterAll(async () => {
-    await context.close();
-});
+test.afterAll(async () => { await context.close(); });
 
 test("Return checksheet to college", async () => {   
     await checksheet.navigateToStatusTabAndSelect(2);
@@ -39,7 +32,7 @@ test("Return checksheet to college", async () => {
 test("Return checksheet to department", async () => {   
     await checksheet.navigateToStatusTabAndSelect(2);
     const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);
+    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
     await checksheet.createBlankChecksheet(element);
     await checksheet.lockChecksheet();
     await checksheet.page.locator('.button-link').click(); 

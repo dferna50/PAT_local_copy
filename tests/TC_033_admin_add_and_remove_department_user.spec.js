@@ -1,9 +1,7 @@
-const { test, expect } = require('@playwright/test');
-const faker = require('faker');
-const { adminPages } = require('../BaseClass/adminPages.js');
+const { test, expect } = require('@playwright/test'), faker = require('faker'), { adminPages } = require('../BaseClass/adminPages.js');
 //const { programListPage } = require('../BaseClass/programListPage.js');
 
-    let context, adminPage, programlist;
+    let context, adminPage;
     
 
     test.beforeAll(async ({ browser }) => {
@@ -13,11 +11,9 @@ const { adminPages } = require('../BaseClass/adminPages.js');
         });
         const page = await context.newPage();
         adminPage = new adminPages(page);
-       // programlist = new programListPage(page);
     });
 
     test.skip("Add and delete a department user", async() => {
         await adminPage.navigateToUsersPage();
         await adminPage.addAndDeleteUser(faker.name.firstName());
-        await adminPage.page.waitForTimeout(2000);
     })
