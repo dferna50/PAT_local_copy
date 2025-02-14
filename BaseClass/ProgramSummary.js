@@ -9,15 +9,15 @@ class ProgramSummaryPage {
         this.programRows = page.locator('.summary-row-head');
         this.expandedDetails = page.locator('.summary-row-expansion');
         this.titleLink =page.locator('a.title-subunit-name');
-    this.homeLink = page.locator('a[title="Program Architecture Tool home page"]');
-    this.programsLink = page.locator('a[title="Programs"]');
-    this.templatesLink = page.getByRole('link', { name: 'Templates' });
-    this.usersLink = page.getByRole('link', { name: 'Users' });
-    this.subplansLink = page.getByRole('link', { name: 'Subplans' });
-    this.viewAllPrograms = page.getByRole('link', { name: 'View all programs' })
-    this.adminLink = page.getByTitle('Admin');
-    this.settings = page.getByRole('link', { name: 'Settings' });
-    this.rollover = page.getByRole('link', { name: 'Start rollover' })
+        this.homeLink = page.locator('a[title="Program Architecture Tool home page"]');
+        this.programsLink = page.locator('a[title="Programs"]');
+        this.templatesLink = page.getByRole('link', { name: 'Templates' });
+        this.usersLink = page.getByRole('link', { name: 'Users' });
+        this.subplansLink = page.getByRole('link', { name: 'Subplans' });
+        this.viewAllPrograms = page.getByRole('link', { name: 'View all programs' })
+        this.adminLink = page.getByTitle('Admin');
+        this.settings = page.getByRole('link', { name: 'Settings' });
+        this.rollover = page.getByRole('link', { name: 'Start rollover' })
     }
 
     async programsLink(){
