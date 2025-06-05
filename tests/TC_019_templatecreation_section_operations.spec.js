@@ -13,16 +13,16 @@ const { test, expect } = require('@playwright/test'), { templateCreation } = req
 
     test.afterAll(async () => {await context.close();});
 
-    test("Create a new section with no requirement", async () => {
+    test("@e2e Create a new section with no requirement", async () => {
         await template.createBlankTemplate();
         await template.createNewSection();
     });
 
-    test("Add an existing section to the template", async () => {
+    test("@e2e Add an existing section to the template", async () => {
         await template.existingSection();
     });
 
-    test("Edit the section and add section notes", async () => {
+    test("@e2e Edit the section and add section notes", async () => {
         await template.createBlankTemplate();
         await template.createNewSection();
         await template.editSectionandAddSectionNotes();

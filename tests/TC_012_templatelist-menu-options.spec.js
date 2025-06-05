@@ -10,12 +10,12 @@ const { test, expect } = require('@playwright/test'), { templateList } = require
 
     test.afterAll(async () => {await context.close();});
 
-    test('Verify the template menu options', async () => {
+    test('@e2e @smoke  Verify the template menu options', async () => {
         await templatelist.page.locator('.vertical-ellipsis').first().click();
         expect(await templatelist.page.locator('.mini-menu-container').first()).toBeVisible();
     });
 
-    test.skip('Delete a template from the template list page', async () => {
+    test.skip('@e2eDelete a template from the template list page', async () => {
         const templateName = await templatelist.page.locator('.border-gray-3 .fw-bold').first().textContent();
         console.log(templateName);
         await templatelist.page.locator('.vertical-ellipsis').first().click();

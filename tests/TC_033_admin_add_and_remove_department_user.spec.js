@@ -13,7 +13,7 @@ const { test, expect } = require('@playwright/test'), faker = require('faker'), 
         adminPage = new adminPages(page);
     });
 
-    test.skip("Add and delete a department user", async() => {
+    test("@e2e Add and delete department user", async() => {
         await adminPage.navigateToUsersPage();
-        await adminPage.addAndDeleteUser(faker.name.firstName());
+        await adminPage.addAndDeleteDepartmentUser(faker.name.firstName(),"DEPARTMENT","CBA","CBADN");
     })

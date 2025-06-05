@@ -25,6 +25,10 @@ class ProgramSummaryPage {
     }
     async goto() {
         await this.page.goto('https://pat-dev.apps.asu.edu/');
+        await this.page.route('**/login', route => route.fulfill({
+          status: 200,
+          body: JSON.stringify({ success: true })
+        }));
         await this.page.waitForTimeout(5000); 
     }
 

@@ -13,17 +13,17 @@ const { test, expect } = require('@playwright/test'), { templateCreation } = req
 
     test.afterAll(async () => {await context.close(); });
 
-    test("Add a course type requirement", async () => {
+    test("@e2e Add a course type requirement", async () => {
         await template.createNewSection();
         await template.addCourseTypeRequirment();
     });
 
-    test("Add a general studies requirement type", async () => {
+    test("@e2e Add a general studies requirement type", async () => {
         await template.createNewSection();
         await template.addGeneralStudiesRequirment();
     });
 
-    test("Add a custom text requirement", async () => {
+    test("@e2e Add a custom text requirement", async () => {
         test.setTimeout(120000);
         await template.navigateToTemplatePage();
         await template.clickCreateTemplateButton();

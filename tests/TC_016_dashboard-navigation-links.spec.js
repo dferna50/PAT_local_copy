@@ -11,17 +11,17 @@ const { test, expect } = require('@playwright/test'), { ProgramSummaryPage } = r
 
     test.afterAll(async () => {await context.close();});
 
-    test('Verify navigation to Programs page', async () => {
+    test('@e2e @smoke Verify navigation to Programs page', async () => {
         await programSummaryPage.clickProgramsLink();
         await programSummaryPage.waitForProgramsPage();
     });
 
-    test('Verify navigation to Template list page.', async () => {
+    test('@e2e @smoke Verify navigation to Template list page.', async () => {
         await programSummaryPage.clickTemplateLink();
         await programSummaryPage.waitForTemplatesPage();
     });
 
-    test('Verify navigation to Users page.', async () => {
+    test('@e2e @smoke Verify navigation to Users page.', async () => {
         await programSummaryPage.clickUsersLink();
         await programSummaryPage.waitForUsersPage();
     });

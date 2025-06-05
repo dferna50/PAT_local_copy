@@ -13,7 +13,7 @@ const { test, expect } = require('@playwright/test'), { ProgramSummaryPage } = r
         await context.close();
     });
 
-    test('Verify college details page', async () => {
+    test('@e2e @smoke  Verify college details page', async () => {
         await programSummaryPage.expandProgramRowsAndVerifyDetails();
     });
 

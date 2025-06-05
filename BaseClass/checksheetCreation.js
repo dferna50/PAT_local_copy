@@ -36,29 +36,38 @@ class checksheetCreation{
                 await this.page.keyboard.press('Tab');
             }
             await this.page.keyboard.press('Space');
+//            await this.statusButton.click();  
         }
-        async createBlankChecksheet(element) {
+        async createBlankChecksheet() {
            // console.log("The element pushed is = "+ element)  //
-           const elements = await this.programsList.all();
-           const randomIndex2 = Math.floor(Math.random() * elements.length);
-           if (await elements[randomIndex2].isVisible()) {
-            await elements[randomIndex2].click();
-        } else {
-            console.error("Element is not visible");
-        }
+           await this.programsList.first().waitFor({ state: 'visible' });
+          // await this.page.waitForTimeout(10000);
+           const elements = await this.programsList.all({ timeout: 15000 });
+           if (elements.length === 0) {
+               throw new Error("No program elements found to select.");
+           }
+           const randomIndex2 = Math.floor(Math.random() * 20);
+           await elements[randomIndex2].scrollIntoViewIfNeeded({ timeout: 15000 });
+           if (await elements[randomIndex2].isVisible({ timeout: 15000 })) {
+               await elements[randomIndex2].click({ timeout: 15000 });
+           } else {
+               console.error("Element is not visible");
+               await this.page.waitForTimeout(5000);
+               await elements[randomIndex2].click({ timeout: 15000 });
+           }
 
 
-       expect(await this.page.getByText('New checksheet')).toBeVisible();
-       await this.createFromBlankChecksheetRadio.click();
-       await this.createChecksheetButton.click();
-        await this.page.getByText('Choose Template').click();
+       expect(await this.page.getByText('New checksheet')).toBeVisible({timeout: 15000});
+       await this.createFromBlankChecksheetRadio.click({timeout: 15000});
+       await this.createChecksheetButton.click({timeout: 15000});
+        await this.page.getByText('Choose Template').click({timeout: 15000});
         await  this.page.waitForTimeout(5000);  // timeout to wait for drop-down to load, can be handled better :)
         await this.page.waitForSelector('.dropdown-menu.show');
         const dropdownItems = await this.page.$$('.dropdown-menu.show .dropdown-item');
         const randomIndex = Math.floor(Math.random() * dropdownItems.length);
         await dropdownItems[randomIndex].click();
         //console.log(`Clicked item: ${await dropdownItems[randomIndex].innerText()}`);
-        await expect(this.validationRulesHeading).toBeVisible();
+        await expect(this.validationRulesHeading).toBeVisible({timeout: 15000});
         }
         async addRequirment(){
             await this.addRequirmentButton.click();

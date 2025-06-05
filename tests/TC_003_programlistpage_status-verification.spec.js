@@ -11,12 +11,12 @@ const { test, expect } = require('@playwright/test'), { programListPage } = requ
 
     test.afterAll(async () => { await context.close();});
 
-    test('Verify "No checksheet exists" status for programs', async () => {
+    test('@e2e @smoke Verify "No checksheet exists" status for programs', async () => {
         await programlist.navigateToStatusTabAndSelect(2);
         expect(await programlist.page.getByText('New checksheet')).toBeVisible();
     });
 
-    test('Verify "Pending department submission" status for programs', async () => {
+    test('@e2e Verify "Pending department submission" status for programs', async () => {
         await programlist.navigateToStatusTabAndSelect(3);
         await programlist.verifyStatusText('Pending department submission');
     });

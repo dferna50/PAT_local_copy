@@ -11,20 +11,20 @@ test.beforeAll(async ({ browser }) => {
 
 test.afterAll(async () => {await context.close();});
 
-test("Create a subsection", async () => {
+test("@e2e Create a subsection", async () => {
     await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
-    await checksheet.createBlankChecksheet(element);
+    // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+    // usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
+    await checksheet.createBlankChecksheet();
     await checksheet.lockChecksheet();
     await checksheet.createNewSubSection();
 });
 
-test("Add requirement to subsection", async () => {
+test("@e2e Add requirement to subsection", async () => {
     await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
-    await checksheet.createBlankChecksheet(element);
+    // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+    // usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
+    await checksheet.createBlankChecksheet();
     await checksheet.lockChecksheet();
     await checksheet.createNewSubSection();
     await checksheet.page.getByRole('button', { name: '+ Add requirement' }).nth(1).click();

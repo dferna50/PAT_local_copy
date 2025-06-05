@@ -1,7 +1,6 @@
 {
   "name": "pat_automation",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {},
   "keywords": [],
@@ -15,6 +14,14 @@
     "playwright": "^1.47.2"
   },
   "dependencies": {
-    "faker": "^5.5.3"
-  }
+    "@executeautomation/playwright-mcp-server": "^1.0.5",
+    "@playwright/mcp": "github:microsoft/playwright-mcp",
+    "dotenv": "^16.5.0",
+    "faker": "^5.5.3",
+    "nodemailer": "^7.0.3"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "description": ""
 }

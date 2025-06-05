@@ -12,7 +12,10 @@ const { defineConfig, devices } = require('@playwright/test');
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
+
+
   timeout: 120000 , 
+  
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -24,10 +27,15 @@ module.exports = defineConfig({
   retries: 2,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 8 : 8,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['html'], ['json', { outputFile: 'playwright-report/report.json' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    actionTimeout: 10000, // 10 seconds
+    navigationTimeout: 10000, // 10 seconds
+    expect: {
+      timeout: 30000, // 5 seconds
+    },
+
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
     video: 'on', 
@@ -35,7 +43,6 @@ module.exports = defineConfig({
     trace: 'on-first-retry',// 'on' | 'retain-on-failure' | 'off'
    
       // Enable video recording for each test
-     
     
   },
 

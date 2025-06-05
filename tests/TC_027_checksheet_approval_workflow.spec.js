@@ -11,11 +11,11 @@ test.beforeAll(async ({ browser }) => {
 
 test.afterAll(async () => {await context.close();});
 
-test("Approve a checksheet", async () => {
+test("@e2e Approve a checksheet", async () => {
     await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
-    await checksheet.createBlankChecksheet(element);
+    // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+    // usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
+    await checksheet.createBlankChecksheet();
     await checksheet.lockChecksheet();
     const approveMessage = faker.lorem.sentence();
     await checksheet.approveChecksheet(approveMessage);

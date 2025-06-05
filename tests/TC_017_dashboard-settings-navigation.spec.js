@@ -11,12 +11,12 @@ const { test, expect } = require('@playwright/test'), { ProgramSummaryPage } = r
 
     test.afterAll(async () => {await context.close();});
 
-    test('Verify navigation to Subplan page', async () => {
+    test('@e2e @smoke Verify navigation to Subplan page', async () => {
         await programSummaryPage.clickSubplanLink();
         await programSummaryPage.waitForSubplanPage();
     });
 
-    test('Verify navigation to settings page', async () => {
+    test('@e2e @smoke Verify navigation to settings page', async () => {
         await programSummaryPage.clickSettingsLink();
         await programSummaryPage.waitForSettingsPage();
     });

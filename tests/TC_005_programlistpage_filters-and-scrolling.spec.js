@@ -11,14 +11,14 @@ const { test, expect } = require('@playwright/test'), { programListPage } = requ
 
     test.afterAll(async () => {        await context.close();    });
 
-    test('Verify department filter for programs list page', async () => {
+    test('@e2e Verify department filter for programs list page', async () => {
         test.setTimeout(250000)
         await programlist.page.locator('button').filter({ hasText: 'Department' }).click();
         await programlist.page.waitForTimeout(5000);
         await programlist.dropdownValues();
     });
 
-    test('Verify scrolling through to the programs list page', async () => {
+    test('@e2e Verify scrolling through to the programs list page', async () => {
         await programlist.verifyProgramsPagLoading();
         await programlist.pagesSrolling();
     });

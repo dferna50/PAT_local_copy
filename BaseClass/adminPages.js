@@ -25,12 +25,12 @@ class adminPages{
        // expect(await this.page.locator("div:nth-child(5) > div > div:nth-child(3)").textContent()).toContain(coursecode);
 
     }
-    async addAndDeleteUser(asurite, role, college, department){ 
+    async addAndDeleteDepartmentUser(asurite, role, college, department){ 
         await this.userAsurite.fill(asurite.toString());   //enter asurite for adding new user// for testing adding random values
-        await this.userRole.selectOption("DEPARTMENT");
-        await this.userColege.selectOption("CBA");
-        await this.page.department.selectOption("CBADN"); 
-        await this.page.addUser; //add user  btton
+        await this.userRole.selectOption(role);
+        await this.userColege.selectOption(college);
+        await this.userDepartment.selectOption(department); 
+        await this.addUser.click(); //add user  btton
         await this.page.reload();
         await expect(await this.asuriteField).toBeVisible();
         for(let i=1; i<=100; i++){
@@ -47,6 +47,57 @@ class adminPages{
                     
             }
         }
+
+        //await this.page.locator('row', { name: asurite+ ' DEPARTMENT W. P. Carey' }).getByRole('button').click();
+    }
+    async addAndDeleteCollegeUser(asurite, role, college){ 
+        await this.userAsurite.fill(asurite.toString());   //enter asurite for adding new user// for testing adding random values
+        await this.userRole.selectOption(role);
+        await this.userColege.selectOption(college);
+        //await this.userDepartment.selectOption(department); 
+        await this.addUser.click(); //add user  btton
+        await this.page.reload();
+        await expect(await this.asuriteField).toBeVisible();
+        for(let i=1; i<=100; i++){
+            {
+                if (await this.page.locator('div > div > div > table > tbody > tr:nth-child('+i+') td').first().textContent() === asurite){  // looped in condititon to find newly created asurite 
+                    this.page.on('dialog', async (dialog) => {  // handling dialog box
+                        console.log(`Dialog message: ${dialog.message()}`);
+                        await dialog.accept(); // Click "OK" on the confirmation dialog
+                      });
+                    await this.page.locator('div > div > div > table > tbody > tr:nth-child('+i+') .btn-gray').click(); //
+                    await this.page.reload(); // relading the page 
+                    break;
+                }
+                    
+            }
+        }
+        
+        //aw
+        // ait this.page.locator('row', { name: asurite+ ' DEPARTMENT W. P. Carey' }).getByRole('button').click();
+    } async addAndDeletePROVOSTUser(asurite, role){ 
+        await this.userAsurite.fill(asurite.toString());   //enter asurite for adding new user// for testing adding random values
+        await this.userRole.selectOption(role);
+        //await this.userColege.selectOption(college);
+        //await this.userDepartment.selectOption(department); 
+        await this.addUser.click(); //add user  btton
+        await this.page.reload();
+        await expect(await this.asuriteField).toBeVisible();
+        for(let i=1; i<=100; i++){
+            {
+                if (await this.page.locator('div > div > div > table > tbody > tr:nth-child('+i+') td').first().textContent() === asurite){  // looped in condititon to find newly created asurite 
+                    this.page.on('dialog', async (dialog) => {  // handling dialog box
+                        console.log(`Dialog message: ${dialog.message()}`);
+                        await dialog.accept(); // Click "OK" on the confirmation dialog
+                      });
+                    await this.page.locator('div > div > div > table > tbody > tr:nth-child('+i+') .btn-gray').click(); //
+                    await this.page.reload(); // relading the page 
+                    break;
+                }
+                    
+            }
+        }
+        
         //await this.page.locator('row', { name: asurite+ ' DEPARTMENT W. P. Carey' }).getByRole('button').click();
     }
     async activateSubplan(newStatus) { 
@@ -85,6 +136,20 @@ class adminPages{
     await this.programSummaryPage.clickTemplateLink();
     await this.programSummaryPage.waitForTemplatesPage();
     }
+    async navigateToRecallRequestPage(){
+    await this.programSummaryPage.goto();
+    await this.page.getByTitle('Admin').click();
+    await this.page.getByRole('link', { name: 'Recall requests' }).click();
+    await this.page.waitForTimeout(2000)
+
+    }
+    async navigateToSubmitToPeopleSoft(){
+        await this.programSummaryPage.goto();
+        await this.page.getByTitle('Admin').click();
+        await this.page.getByRole('link', { name: 'Submit to PeopleSoft' }).click();
+        await this.page.waitForTimeout(2000)
+    
+        }
     async navigateToSubplansPage(){
         await this.programSummaryPage.goto();
          await this.programSummaryPage.clickSubplanLink();

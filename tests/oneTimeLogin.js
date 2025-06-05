@@ -1,6 +1,7 @@
 const { chromium } = require('playwright');
-const loginData = require('../BaseClass/loginData.json');
-
+require('dotenv').config({ path: './BaseClass/loginData.env' });
+ const username = process.env.LOGIN_USERNAME;
+ const password = process.env.LOGIN_PASSWORD;
 (async () => {
   const browser = await chromium.launch({ headless: false }); // Forcefully opening the browser in headful mode
   const context = await browser.newContext(); //creating new browser context
@@ -11,9 +12,10 @@ const loginData = require('../BaseClass/loginData.json');
   await page.waitForURL('https://weblogin.asu.edu/cas/login?service*'); // waiting for the redirect page(i.e the duo login page) to load
   // Fill in username and password (manual Duo interaction required for 2FA)
   await page.locator('#username').click();
-  await page.locator('#username').fill(loginData.username); 
+  await page.locator('#username').fill(username); 
   await page.locator('#username').press('Tab');
-  await page.locator('#password').fill(loginData.password);
+  await page.locator('#password').fill(password);
+  //await page.waitForTimeout(50000);
   await page.getByRole('button', { name: 'Sign In' }).click();
   await page.waitForURL('https://api-ab654001.duosecurity.com/**');
   await page.getByRole('button', { name: 'Yes, this is my device' }).click(); ///unecessary step, could be skipped. 

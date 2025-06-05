@@ -11,20 +11,20 @@ const { test, expect } = require('@playwright/test'), { adminPages } = require('
 
     test.afterAll(async () => {        await context.close();    });
 
-    test('Verify Navigation to the "Template List" Page', async () => {
+    test('@e2e @smoke Verify Navigation to the "Template List" Page', async () => {
         await adminPage.navigateToTemplatePage();
     });
-    test('Verify Navigation to the "Subplans" Page', async () => {
+    test('@e2e @smoke Verify Navigation to the "Subplans" Page', async () => {
       await adminPage.navigateToSubplansPage();
     });
-    test('Verify navigation to the"Users" page' , async ()=> {
+    test('@e2e @smoke Verify navigation to the"Users" page' , async ()=> {
         await adminPage.navigateToUsersPage();
 
     })
-    test('Verify navigation to "Settings" page', async () => {
+    test('@e2e @smoke Verify navigation to "Settings" page', async () => {
         await adminPage.navigateToSettingsPage();
     })
-    test('Verify Navigation to "Rollover" page' , async () =>{ 
+    test('@e2e @smoke Verify Navigation to "Rollover" page' , async () =>{ 
         await adminPage.navigateToRolloverPage();
     }) 
 

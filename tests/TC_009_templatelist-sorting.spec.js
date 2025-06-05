@@ -12,11 +12,11 @@ const { templateList } = require('../BaseClass/templateList.js');
 
     test.afterAll(async () => {await context.close();});
 
-    test('Verify Template List for the Selected Catalog Year', async () => {
+    test('@e2e @smoke Verify Template List for the Selected Catalog Year', async () => {
         await templatelist.selectCatalogYear(5);
     });
 
-    test('Verify Sorting Functionality', async () => {
+    test('@e2e Verify Sorting Functionality', async () => {
         await templatelist.sorting();
     });
 

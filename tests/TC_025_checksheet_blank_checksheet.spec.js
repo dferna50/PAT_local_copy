@@ -11,10 +11,10 @@ test.beforeAll(async ({ browser }) => {
 
 test.afterAll(async () => {    await context.close();});
 
-test("Create a new blank checksheet", async () => { 
+test("@e2e @smoke Create a new blank checksheet", async () => { 
     await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
-    await checksheet.createBlankChecksheet(element);
+    // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+    // usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
+    await checksheet.createBlankChecksheet();
     await checksheet.page.waitForTimeout(2000);    
 });

@@ -14,19 +14,19 @@ const { test, expect } = require('@playwright/test'), { templateCreation } = req
 
     test.afterAll(async () => {await context.close();    });
 
-  test("Add a preset text type requirement", async () => {
+  test("@e2e Add a preset text type requirement", async () => {
         await template.createTextOption(0);
         await template.page.getByRole('button', { name: 'Sections', exact: true }).click();
         await template.createNewSection();
         await template.addPresetTextOption();
     });
 
-    test("Add an elective type requirement", async () => {
+    test("@e2e Add an elective type requirement", async () => {
         await template.createNewSection();
         await template.electiveReq();
     });
 
-    test("Add a check type requirement", async () => {
+    test("@e2e Add a check type requirement", async () => {
         await template.createNewSection();
         await template.checkReq();
     });

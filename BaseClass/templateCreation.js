@@ -3,6 +3,7 @@ const { faker } = require('@faker-js/faker');
 const validationData = require('../BaseClass/validationText.json');
 const { ProgramSummaryPage } = require('../BaseClass/ProgramSummary.js');
 let  fakerGroupName = faker.lorem.words(4);
+let name = faker.lorem.word();
 
 //let programSummaryPage;
 class templateCreation{
@@ -41,6 +42,25 @@ class templateCreation{
         this.newTemplateButton = this.page.getByRole('button', { name: '+ New template' })
     }
 
+    async deleteBlankTemplate() {
+
+        await this.page.getByText(name).click();  //name
+         //const regex = new RegExp(`^New Template - ${"dolores"}—*$`);
+         //await this.page.locator('.vertical-ellipsis').filter({ hasText: "dolores" }).click(); 
+       //  await this.page.keyboard.press("Enter");
+       // await this.page.mouse.move(0, 100);
+    //    await this.page.keyboard.press("Tab");
+    //    await this.page.keyboard.press("Tab");
+    await this.page
+    .getByText('New Template - '+name+'—')
+    .filter({ has: this.page.locator('.vertical-ellipsis') }).getByRole('button')
+    .click();
+           await this.page.keyboard.press("Enter");
+
+          await this.page.getByRole('button', { name: 'Delete' }).click();
+        // await this.page.waitForTimeout(5000);
+      }
+
     async navigateToTemplatePage() { 
         await this.programSummaryPage.goto();
         await this.programSummaryPage.clickTemplateLink();
@@ -50,8 +70,8 @@ class templateCreation{
         await  this.newTemplateButton.click();
         await expect( this.rootLocator).toContainText(validationData.defaultNewTemplateName);
         }
+    
         async templatenameCreatorAndFinder(){
-        let name = faker.lorem.word();
         await this.page.getByRole('textbox').nth(1).fill("New Template - " + name);   // template name name text box 
         await this.page.keyboard.press("Tab")
         await this.page.getByRole('button', { name: 'Save' }).click();
@@ -62,8 +82,10 @@ class templateCreation{
         async createBlankTemplate(){
         await this.page.getByText(validationData.defaultNewTemplateName).click();
         await this.page.getByRole('textbox').nth(1).click();
-        await this.page.getByRole('textbox').nth(1).fill('')
-        }
+        // await this.page.getByRole('textbox').nth(1).fill(toString(blankTemplateName));   // template name name text boxtemplateName)
+        // await this.page.goBack();
+        // await expect(this.rootLocator).toContainText(blankTemplateName); 
+    }
         async createNewSection() { 
             await this.addSectionButton.click(); 
             await this.createNewSectionButton.click();
@@ -82,10 +104,14 @@ class templateCreation{
                 }
                 async editSectionandAddSectionNotes() { 
                     await this.editSectionButton.click();
-                    await this.addSectionNotes.click(); 
+                    //await this.addSectionNotes.click(); 
                     let notes = faker.lorem.paragraph();
-                    await this.sectionNotesTextBox.fill(notes);
-                    await this.saveSectionNotes.click();
+                    await this.page.getByRole('button', { name: '+ Add requirement' }).click()
+                    await this.page.locator('.ql-editor').click()
+                    await this.page.locator('.ql-editor').fill(notes);
+                    await this.page.getByRole('dialog').getByRole('button', { name: 'Save' }).click();
+                    //await this.sectionNotesTextBox.fill(notes);
+                    //await this.saveSectionNotes.click();
                     await this.updateInLibraryButton.click();
                     await expect ( this.page.locator("#root")).toContainText(notes);        
                 }
@@ -129,7 +155,7 @@ class templateCreation{
                     await this.page.selectOption('#componentSelect', { value: 'req_text' });
                     await this.page.selectOption("#componentsContainer > div > div > div:nth-child(3) > div.d-flex.gap-2 > div.mb-2 > select", {value: "custom_text"})
                     let customText = faker.lorem.paragraph();
-                    await this.page.locator('textarea[name="customText"]').fill(customText);
+                    await this.page.locator('.ql-editor').first().fill(customText);
                     await this.saveSectionNotes.click() // Save requirments /// reusing the same locator
                     await this.updateInLibraryButton.click(); 
                    // await this.page.waitForTimeout(2000);
@@ -147,8 +173,8 @@ class templateCreation{
                    // await this.page.waitForTimeout(2000);
                 }
                 async deleteTextOption() { 
-                   await this.deleteGroup.click();
-                   await this.deleteConformation.click();
+                   await this.deleteGroup.click({timeout:15000});
+                   await this.deleteConformation.click({timeout:15000});
                    await expect(this.page.locator('.pt-2 > div')).not.toContainText(fakerGroupName);
                    await this.page.waitForTimeout(2000);             
                 }
@@ -230,7 +256,7 @@ class templateCreation{
                     await this.page.selectOption('#componentSelect', { value: 'req_text' });
                     await this.page.selectOption("#componentsContainer > div > div > div:nth-child(3) > div.d-flex.gap-2 > div.mb-2 > select", {value: "custom_text"})
                     let customText = faker.lorem.paragraph();
-                    await this.page.locator('textarea[name="customText"]').fill(customText);
+                    await this.page.locator('.ql-editor').first().fill(customText);
                     let randomminGrade = Math.floor(Math.random() * 7) +2
                    // console.log("the random chosen min grade index - " + randomminGrade)
                     await this.page.selectOption("div:nth-child(5)> div:nth-child(2) > select" , {index:randomminGrade});

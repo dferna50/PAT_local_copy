@@ -15,6 +15,7 @@ class programListPage{
     }
     async navigateToProgramsPage() { 
     await this.programSummaryPage.goto();
+  
     await this.page.waitForTimeout(2000);
     await this.programSummaryPage.checkLinkAccessibility(this.programSummaryPage.programsLink);
     await this.programSummaryPage.clickProgramsLink();

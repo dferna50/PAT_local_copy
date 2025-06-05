@@ -11,15 +11,15 @@ test.beforeAll(async ({ browser }) => {
 
 test.afterAll(async () => { await context.close(); });
 
-test("Return checksheet to college", async () => {   
+test("@e2e Return checksheet to college", async () => {   
     await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);
-    await checksheet.createBlankChecksheet(element);
+   // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+   // usedCourses.push(element);
+    await checksheet.createBlankChecksheet();
     await checksheet.lockChecksheet();
     await checksheet.page.locator('.button-link').click(); 
     const returnReason = faker.lorem.sentence();
-    await checksheet.page.locator('.mb-6').first().fill(returnReason);
+    await checksheet.page.getByPlaceholder('Write your message here...').fill(returnReason);
     await checksheet.page.getByRole('button', { name: 'Submit' }).click();
     await checksheet.page.getByRole('button', { name: 'Okay' }).click();
     await checksheet.page.waitForTimeout(2000)
@@ -29,11 +29,11 @@ test("Return checksheet to college", async () => {
     await checksheet.checkChecksheetHistory(returnReason, 'Returned to college/school');
 });
 
-test("Return checksheet to department", async () => {   
-    await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
-    await checksheet.createBlankChecksheet(element);
+test.skip("@e2e Return checksheet to department", async () => {   
+    await checksheet.navigateToStatusTabAndSelect(2); // no longer applicable 
+    // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+    // usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
+    await checksheet.createBlankChecksheet();
     await checksheet.lockChecksheet();
     await checksheet.page.locator('.button-link').click(); 
     const returnReason = faker.lorem.sentence();

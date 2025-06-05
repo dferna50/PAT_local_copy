@@ -11,12 +11,12 @@ const { test, expect } = require('@playwright/test'), { programListPage } = requ
 
     test.afterAll(async () => {await context.close();});
 
-    test('Verify "Pending college/school submission" status for programs', async () => {
+    test('@e2e @smoke Verify "Pending college/school submission" status for programs', async () => {
         await programlist.navigateToStatusTabAndSelect(4);
         await programlist.verifyStatusText('Pending college/school');
     });
 
-    test('Verify "Pending Provost review" status for programs', async () => {
+    test('@e2e @smoke Verify "Pending Provost review" status for programs', async () => {
         await programlist.navigateToStatusTabAndSelect(5);
         await programlist.verifyStatusText('Pending Provost review');
     });

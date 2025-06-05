@@ -13,16 +13,16 @@ const { test, expect } = require('@playwright/test'),  { templateCreation } = re
 
     test.afterAll(async () => {        await context.close();    });
 
-    test("Create a text group", async () => {
+    test("@e2e Create a text group", async () => {
         await template.createTextOption(0);
     });
 
-    test("Delete a text group", async () => {
+    test("@e2e Delete a text group", async () => {
         await template.createTextOption(0);
         await template.deleteTextOption();
     });
 
-    test("Create multiple text groups", async () => {
+    test("@e2e Create multiple text groups", async () => {
         for (let i = 0; i < 3; i++) {
             await template.createTextOption(i);
         }

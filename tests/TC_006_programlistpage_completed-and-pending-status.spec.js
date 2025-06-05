@@ -12,12 +12,12 @@ const { test, expect } = require('@playwright/test'), { programListPage } = requ
 
     test.afterAll(async () => {        await context.close();    });
 
-    test('Verify "Pending DARS encoding" status for programs', async () => {
+    test('@e2e @smoke Verify "Pending DARS encoding" status for programs', async () => {
         await programlist.navigateToStatusTabAndSelect(6);
         await programlist.verifyStatusText('Pending DARS encoding');
     });
 
-    test('Verify "Completed" status for programs', async () => {
+    test('@e2e @smoke Verify "Completed" status for programs', async () => {
         await programlist.navigateToStatusTabAndSelect(7);
         await programlist.verifyStatusText('Completed');
     });

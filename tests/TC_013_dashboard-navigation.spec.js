@@ -12,11 +12,11 @@ const { test, expect } = require('@playwright/test'), { ProgramSummaryPage } = r
     test.afterAll(async () => {await context.close();
     });
 
-    test('Verify Login without Duo login', async () => {
+    test('@e2e @smoke Verify Login as a PROVOST user', async () => {
         await programSummaryPage.verifyProgramText('Business, W. P. Carey School of');
     });
 
-    test('Verify all catalog years on the dashboard', async () => {
+    test('@e2e @smoke Verify all catalog years on the dashboard', async () => {
         await programSummaryPage.selectCatalogYear(5, 'Business, W. P. Carey School of');
     });
 

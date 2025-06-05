@@ -11,6 +11,6 @@ test.beforeAll(async ({ browser }) => {
 
 test.afterAll(async () => {    await context.close();});
 
-test("Verify navigation to the checksheet page", async() => {
+test("@e2e @smoke Verify navigation to the checksheet page", async() => {
     await checksheet.navigateToStatusTabAndSelect(2);
 })

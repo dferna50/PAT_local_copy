@@ -11,7 +11,7 @@ const { test, expect } = require('@playwright/test'), { programListPage } = requ
 
     test.afterAll(async () => { await context.close();});
 
-    test('Verify location filter for programs list page', async () => {
+    test('@e2e @smoke Verify location filter for programs list page', async () => {
         await programlist.page.getByText('Location', { exact: true }).click();
         await programlist.page.waitForTimeout(5000);
         await programlist.dropdownValues();

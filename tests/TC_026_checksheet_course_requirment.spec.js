@@ -11,21 +11,21 @@ test.beforeAll(async ({ browser }) => {
 
 test.afterAll(async () => {await context.close();});
 
-test("Add new course type requirement", async () => {
+test("@e2e Add new course type requirement", async () => {
     await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
-    await checksheet.createBlankChecksheet(element);
+    // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+    // usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
+    await checksheet.createBlankChecksheet();
     await checksheet.lockChecksheet();
     await checksheet.addRequirment();
     await checksheet.addNewCourseTypeRequirment();
 });
 
-test("Create and edit course list", async () => {
+test("@e2e Create and edit course list", async () => {
     await checksheet.navigateToStatusTabAndSelect(2);
-    const element = await checksheet.page.locator('.text-gray-7').first().textContent();
-    usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
-    await checksheet.createBlankChecksheet(element);
+    // const element = await checksheet.page.locator('.text-gray-7').first().textContent();
+    // usedCourses.push(element);  // for destroying the created checksheet // currently not in use. 
+    await checksheet.createBlankChecksheet();
     await checksheet.lockChecksheet();
     await checksheet.createNewCourseList();
     await checksheet.editCourseList();
