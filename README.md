@@ -81,25 +81,6 @@ You can also run specific tests or use various Playwright CLI options:
     npx playwright show-report
     ```
 
-## Test Automation Flow
-
-Here's a high-level overview of how the Playwright test automation scripts operate:
-
-```mermaid
-graph TD
-    A[Start Test Execution] --> B{Initialize Playwright};
-    B --> C[Load Authentication State (auth.json)];
-    C --> D[Navigate to Application URL];
-    D --> E{Execute Test Cases};
-    E --> F[Interact with UI Elements];
-    F --> G[Perform Assertions];
-    G --> H{Generate Test Reports};
-    H --> I[Capture Screenshots/Videos (on failure/configured)];
-    I --> J[End Test Execution];
-    E --> K{Utilize Base Classes};
-    K --> F;
-    K --> G;
-```
 
 ## Configuration
 
